@@ -36,7 +36,7 @@ public class TimelineTrigger : MonoBehaviour
         }
         else
         {
-            Debug.Log("Not Player. Tag was: " + other.tag);
+            Debug.Log("Entered by: " + other.name + " | Tag: " + other.tag);
         }
     }
 }
