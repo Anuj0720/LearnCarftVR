@@ -14,6 +14,8 @@ public class LessonManager : MonoBehaviour
     [Header("Puzzle Blocks (Timeline 2)")]
     public GameObject puzzleBlocksParent;
 
+    public HintManager hintManager;
+
     void Start()
     {
         // Make sure puzzle blocks are disabled at start
@@ -50,6 +52,7 @@ public class LessonManager : MonoBehaviour
     void OnQuestionFinished(PlayableDirector pd)
     {
         Debug.Log("Question Timeline Finished");
+        hintManager.StartPuzzle();
 
         EnableGrabbing();
     }
