@@ -19,6 +19,7 @@ public class HintManager : MonoBehaviour
 
     void Update()
     {
+        // Stop processing completely if puzzle is solved
         if (!puzzleActive || puzzleSolved) return;
 
         timer += Time.deltaTime;
@@ -38,30 +39,63 @@ public class HintManager : MonoBehaviour
     {
         puzzleActive = true;
         timer = 0f;
+        puzzleSolved = false;
+        hint1Played = false;
+        hint2Played = false;
     }
 
     public void ResetTimer()
     {
-        timer = 0f;
+        // Only reset if puzzle not solved yet
+        if (!puzzleSolved)
+        {
+            timer = 0f;
+        }
     }
 
     public void PuzzleSolved()
     {
         puzzleSolved = true;
+
+        // Stop any currently playing hint timelines immediately
+        if (hint1Timeline != null && hint1Timeline.state == PlayState.Playing)
+        {
+            hint1Timeline.Stop();
+        }
+
+        if (hint2Timeline != null && hint2Timeline.state == PlayState.Playing)
+        {
+            hint2Timeline.Stop();
+        }
+
+        // Turn off the cube highlight emission if hint 2 had activated it
+        if (correctCubeRenderer != null)
+        {
+            correctCubeRenderer.material.DisableKeyword("_EMISSION");
+        }
     }
 
     void PlayHint1()
     {
+        // Double-check puzzle isn't solved before playing
+        if (puzzleSolved) return;
+
         hint1Played = true;
         hint1Timeline.Play();
     }
 
     void PlayHint2()
     {
+        // Double-check puzzle isn't solved before playing
+        if (puzzleSolved) return;
+
         hint2Played = true;
         hint2Timeline.Play();
 
-        correctCubeRenderer.material.EnableKeyword("_EMISSION");
-        correctCubeRenderer.material.SetColor("_EmissionColor", Color.yellow * 3f);
+        if (correctCubeRenderer != null)
+        {
+            correctCubeRenderer.material.EnableKeyword("_EMISSION");
+            correctCubeRenderer.material.SetColor("_EmissionColor", Color.yellow * 3f);
+        }
     }
 }
