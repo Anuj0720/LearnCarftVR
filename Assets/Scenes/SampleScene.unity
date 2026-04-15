@@ -6197,7 +6197,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hint1Delay: 10
-  hint2Delay: 15
+  hint2Delay: 30
   hint1Timeline: {fileID: 49628763}
   hint2Timeline: {fileID: 1963796506}
   correctCubeRenderer: {fileID: 204331963}
