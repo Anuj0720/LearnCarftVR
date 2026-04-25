@@ -26,7 +26,7 @@ public class BallSpawner : MonoBehaviour
     public Color glowColor = Color.yellow;
 
     public float glowIntensity = 3f;
-    public float glowDuration = 0.7f;
+    public float glowDuration = 1.2f;
 
     private readonly List<GameObject> spawnedBalls = new List<GameObject>();
     private readonly List<Material> mats = new List<Material>();
