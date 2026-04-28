@@ -2034,7 +2034,7 @@ MonoBehaviour:
   disappointedTriggerName: Disappointed
   wrongAnswerAudioSource: {fileID: 1105430433}
   wrongAnswerClip: {fileID: 8300000, guid: a2e2fcf630a1947a596cbec4439735c8, type: 3}
-  motivationAudioClip: {fileID: 8300000, guid: 4eb9cc52f34b340f9b459e4dfb2c641a, type: 3}
+  motivationAudioClip: {fileID: 8300000, guid: a712cf199111940c69d7e9bda92082d7, type: 3}
   correctAnswerAudioSource: {fileID: 1105430433}
   correctAnswerClip: {fileID: 8300000, guid: 932b5a24927054e6db1db287b8e19b9b, type: 3}
   fallbackAudioSource: {fileID: 1105430433}
@@ -16179,6 +16179,8 @@ PlayableDirector:
     value: {fileID: 204331952}
   - key: {fileID: -98180457401837079, guid: 4933b35386fa0474f9525f54366b12d3, type: 2}
     value: {fileID: 52434259}
+  - key: {fileID: -4220240769232821914, guid: 4933b35386fa0474f9525f54366b12d3, type: 2}
+    value: {fileID: 1167555202}
   m_ExposedReferences:
     m_References:
     - 8f7016617781c485e84cdecb1d87a487: {fileID: 999953894}
