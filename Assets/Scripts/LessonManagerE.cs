@@ -7,6 +7,9 @@ public class LessonManagerE : MonoBehaviour
     [Header("Timeline")]
     public PlayableDirector questionTimeline;
 
+    [Header("Demo Blocks")]
+    public GameObject demoBlocksParent;
+
     [Header("Puzzle Blocks")]
     public GameObject puzzleBlocksParent;
 
@@ -14,23 +17,28 @@ public class LessonManagerE : MonoBehaviour
 
     void Start()
     {
+        // Prevent auto play
+        questionTimeline.playOnAwake = false;
+
         // Disable puzzle blocks and grabbing at start
         puzzleBlocksParent.SetActive(false);
         DisableGrabbing();
 
-        // Subscribe to timeline event
+        // Subscribe to timeline stopped event
         questionTimeline.stopped += OnQuestionFinished;
-
-        // Play question timeline immediately
-        questionTimeline.Play();
     }
 
     // -----------------------------
     // AFTER TIMELINE FINISHES
+    // (TimelineTrigger plays it, we just react when it stops)
     // -----------------------------
     void OnQuestionFinished(PlayableDirector pd)
     {
         Debug.Log("Question Timeline Finished");
+
+        // Hide demo blocks
+        if (demoBlocksParent != null)
+            demoBlocksParent.SetActive(false);
 
         // Enable puzzle blocks
         puzzleBlocksParent.SetActive(true);
