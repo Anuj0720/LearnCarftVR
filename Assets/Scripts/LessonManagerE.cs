@@ -17,20 +17,31 @@ public class LessonManagerE : MonoBehaviour
 
     void Start()
     {
-        // Prevent auto play
         questionTimeline.playOnAwake = false;
 
-        // Disable puzzle blocks and grabbing at start
-        puzzleBlocksParent.SetActive(false);
+        // Keep puzzleBlocksParent ACTIVE so Timeline can control its children
+        // But hide each child individually at start
+        HidePuzzleChildren();
+
         DisableGrabbing();
 
-        // Subscribe to timeline stopped event
         questionTimeline.stopped += OnQuestionFinished;
+    }
+
+    // Hide all children of puzzleBlocksParent individually
+    // so the parent stays active for Timeline to work
+    void HidePuzzleChildren()
+    {
+        foreach (Transform child in puzzleBlocksParent.transform)
+        {
+            child.gameObject.SetActive(false);
+        }
+
+        Debug.Log("Puzzle children hidden individually, parent stays active.");
     }
 
     // -----------------------------
     // AFTER TIMELINE FINISHES
-    // (TimelineTrigger plays it, we just react when it stops)
     // -----------------------------
     void OnQuestionFinished(PlayableDirector pd)
     {
@@ -40,11 +51,22 @@ public class LessonManagerE : MonoBehaviour
         if (demoBlocksParent != null)
             demoBlocksParent.SetActive(false);
 
-        // Enable puzzle blocks
-        puzzleBlocksParent.SetActive(true);
+        // Make sure all puzzle children are visible after timeline ends
+        ShowPuzzleChildren();
 
         hintManager.StartPuzzle();
         EnableGrabbing();
+    }
+
+    // Enable all children of puzzleBlocksParent
+    void ShowPuzzleChildren()
+    {
+        foreach (Transform child in puzzleBlocksParent.transform)
+        {
+            child.gameObject.SetActive(true);
+        }
+
+        Debug.Log("All puzzle children shown.");
     }
 
     // -----------------------------
@@ -52,6 +74,7 @@ public class LessonManagerE : MonoBehaviour
     // -----------------------------
     void DisableGrabbing()
     {
+        // Use true to include inactive children
         XRGrabInteractable[] grabObjects =
             puzzleBlocksParent.GetComponentsInChildren<XRGrabInteractable>(true);
 
@@ -59,6 +82,8 @@ public class LessonManagerE : MonoBehaviour
         {
             grab.enabled = false;
         }
+
+        Debug.Log("Grabbing Disabled");
     }
 
     void EnableGrabbing()
