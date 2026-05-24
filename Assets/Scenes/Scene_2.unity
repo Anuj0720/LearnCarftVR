@@ -16407,9 +16407,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7889e767419100843b76c73a1f49439a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  questionTimeline: {fileID: 0}
-  demoBlocksParent: {fileID: 0}
-  puzzleBlocksParent: {fileID: 0}
+  questionTimeline: {fileID: 1899352735}
+  demoBlocksParent: {fileID: 1372659903}
+  puzzleBlocksParent: {fileID: 379080520}
   hintManager: {fileID: 1487872521}
 --- !u!1001 &1294306621
 PrefabInstance:
