@@ -11,6 +11,7 @@ public class SceneLoader : MonoBehaviour
     public AudioClip sceneTransitionSound;
 
     private AudioSource audioSource;
+    private string targetSceneName;  // used by LoadSceneByName
 
     void Awake()
     {
@@ -18,6 +19,7 @@ public class SceneLoader : MonoBehaviour
         audioSource.playOnAwake = false;
     }
 
+    // ── Called from Menu buttons ──────────────────────────────────────────────
     public void LoadMathsScene()
     {
         PlaySounds();
@@ -30,6 +32,15 @@ public class SceneLoader : MonoBehaviour
         Invoke("GoToEnglish", 0.5f);
     }
 
+    // ── Called from GameEnd.cs dynamically ───────────────────────────────────
+    public void LoadSceneByName(string sceneName)
+    {
+        targetSceneName = sceneName;
+        PlaySounds();
+        Invoke("GoToTargetScene", 0.5f);
+    }
+
+    // ── Sound helper ─────────────────────────────────────────────────────────
     void PlaySounds()
     {
         if (buttonClickSound != null)
@@ -39,6 +50,7 @@ public class SceneLoader : MonoBehaviour
             audioSource.PlayOneShot(sceneTransitionSound);
     }
 
+    // ── Scene transition methods ──────────────────────────────────────────────
     void GoToMaths()
     {
         Initiate.Fade("Maths", fadeColor, fadeSpeed);
@@ -47,5 +59,10 @@ public class SceneLoader : MonoBehaviour
     void GoToEnglish()
     {
         Initiate.Fade("Scene_2", fadeColor, fadeSpeed);
+    }
+
+    void GoToTargetScene()
+    {
+        Initiate.Fade(targetSceneName, fadeColor, fadeSpeed);
     }
 }
