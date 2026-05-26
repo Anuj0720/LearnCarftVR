@@ -412,7 +412,6 @@ GameObject:
   - component: {fileID: 8783066}
   - component: {fileID: 8783069}
   - component: {fileID: 8783068}
-  - component: {fileID: 8783067}
   m_Layer: 0
   m_Name: Answer socket
   m_TagString: Untagged
@@ -436,30 +435,6 @@ Transform:
   - {fileID: 1779540270}
   m_Father: {fileID: 1318789838}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8783067
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8783065}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3fde3806151114feb8a51faf2439648a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  correctAnswer: 1
-  celebrationTimeline: {fileID: 1350819675}
-  puzzleBlocksParent: {fileID: 379080520}
-  hintManager: {fileID: 1487872521}
-  robotAnimator: {fileID: 762199708}
-  disappointedTriggerName: Disappointed
-  wrongAnswerAudioSource: {fileID: 1078995739}
-  wrongAnswerClip: {fileID: 8300000, guid: a2e2fcf630a1947a596cbec4439735c8, type: 3}
-  motivationAudioClip: {fileID: 8300000, guid: a712cf199111940c69d7e9bda92082d7, type: 3}
-  correctAnswerAudioSource: {fileID: 1078995739}
-  correctAnswerClip: {fileID: 8300000, guid: 932b5a24927054e6db1db287b8e19b9b, type: 3}
-  fallbackAudioSource: {fileID: 1078995739}
 --- !u!65 &8783068
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4442,11 +4417,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: d8cf146cb6abac342b46cf2a83cf5ac0,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 294642789}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d8cf146cb6abac342b46cf2a83cf5ac0, type: 3}
 --- !u!4 &294642787 stripped
 Transform:
@@ -4454,37 +4425,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 294642786}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &294642788 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: d8cf146cb6abac342b46cf2a83cf5ac0,
-    type: 3}
-  m_PrefabInstance: {fileID: 294642786}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &294642789
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 294642788}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e520d0ae436dcb74ebcaa36de6ee7b9e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  questionsTimeline: {fileID: 0}
-  correctAnswers: 
-  puzzleBlocksParent: {fileID: 0}
-  hintManager: {fileID: 0}
-  robotAnimator: {fileID: 0}
-  disappointedTriggerName: Disappointed
-  wrongAnswerAudioSource: {fileID: 0}
-  wrongAnswerClip: {fileID: 0}
-  motivationAudioClip: {fileID: 0}
-  correctAnswerAudioSource: {fileID: 0}
-  correctAnswerClip: {fileID: 0}
-  fallbackAudioSource: {fileID: 0}
-  finalCelebrationTimeline: {fileID: 0}
 --- !u!1 &298127910
 GameObject:
   m_ObjectHideFlags: 0
@@ -4658,11 +4598,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: c657a03f9ea4d1f4c87c05a519c71b6e,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 300572526}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c657a03f9ea4d1f4c87c05a519c71b6e, type: 3}
 --- !u!4 &300572524 stripped
 Transform:
@@ -4670,37 +4606,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 300572523}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &300572525 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: c657a03f9ea4d1f4c87c05a519c71b6e,
-    type: 3}
-  m_PrefabInstance: {fileID: 300572523}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &300572526
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 300572525}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e520d0ae436dcb74ebcaa36de6ee7b9e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  questionsTimeline: {fileID: 0}
-  correctAnswers: 
-  puzzleBlocksParent: {fileID: 0}
-  hintManager: {fileID: 0}
-  robotAnimator: {fileID: 0}
-  disappointedTriggerName: Disappointed
-  wrongAnswerAudioSource: {fileID: 0}
-  wrongAnswerClip: {fileID: 0}
-  motivationAudioClip: {fileID: 0}
-  correctAnswerAudioSource: {fileID: 0}
-  correctAnswerClip: {fileID: 0}
-  fallbackAudioSource: {fileID: 0}
-  finalCelebrationTimeline: {fileID: 0}
 --- !u!1 &301034850
 GameObject:
   m_ObjectHideFlags: 0
@@ -4881,7 +4786,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 304561483}
-  - component: {fileID: 304561484}
   m_Layer: 0
   m_Name: LessonManagerRoom4
   m_TagString: Untagged
@@ -4904,24 +4808,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 321859404}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &304561484
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 304561482}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1fb51a53f6f3f994da7e0035c19368b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  timelines:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
 --- !u!1001 &312669625
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5695,7 +5581,7 @@ GameObject:
   - component: {fileID: 371524553}
   - component: {fileID: 371524556}
   - component: {fileID: 371524555}
-  - component: {fileID: 371524554}
+  - component: {fileID: 371524557}
   m_Layer: 0
   m_Name: Answer socket
   m_TagString: Untagged
@@ -5719,31 +5605,6 @@ Transform:
   - {fileID: 641035036}
   m_Father: {fileID: 2081611252}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &371524554
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 371524552}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e520d0ae436dcb74ebcaa36de6ee7b9e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  questionsTimeline: {fileID: 0}
-  correctAnswers: 
-  puzzleBlocksParent: {fileID: 0}
-  hintManager: {fileID: 0}
-  robotAnimator: {fileID: 0}
-  disappointedTriggerName: Disappointed
-  wrongAnswerAudioSource: {fileID: 0}
-  wrongAnswerClip: {fileID: 0}
-  motivationAudioClip: {fileID: 0}
-  correctAnswerAudioSource: {fileID: 0}
-  correctAnswerClip: {fileID: 0}
-  fallbackAudioSource: {fileID: 0}
-  finalCelebrationTimeline: {fileID: 0}
 --- !u!65 &371524555
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5825,6 +5686,31 @@ MonoBehaviour:
   m_SocketScaleMode: 0
   m_FixedScale: {x: 1, y: 1, z: 1}
   m_TargetBoundsSize: {x: 1, y: 1, z: 1}
+--- !u!114 &371524557
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 371524552}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49d15f62143d9460babbd8b0aa402bbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  questionsTimeline: {fileID: 0}
+  correctAnswers: 0100000002000000
+  puzzleBlocksParent: {fileID: 2006956781}
+  hintManager: {fileID: 0}
+  robotAnimator: {fileID: 0}
+  disappointedTriggerName: Disappointed
+  wrongAnswerAudioSource: {fileID: 0}
+  wrongAnswerClip: {fileID: 0}
+  motivationAudioClip: {fileID: 0}
+  correctAnswerAudioSource: {fileID: 0}
+  correctAnswerClip: {fileID: 0}
+  fallbackAudioSource: {fileID: 0}
+  finalCelebrationTimeline: {fileID: 0}
 --- !u!1001 &371910422
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10717,6 +10603,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 733819299}
   m_CullTransparentMesh: 1
+--- !u!1 &736792170
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 736792171}
+  m_Layer: 0
+  m_Name: attach
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &736792171
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 736792170}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1860130247}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &737001430 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 428772, guid: 73eea014833549e42853d51ff2b37c32,
@@ -15075,7 +14992,6 @@ GameObject:
   - component: {fileID: 1095414487}
   - component: {fileID: 1095414490}
   - component: {fileID: 1095414489}
-  - component: {fileID: 1095414488}
   m_Layer: 0
   m_Name: Answer socket
   m_TagString: Untagged
@@ -15099,30 +15015,6 @@ Transform:
   - {fileID: 181521133}
   m_Father: {fileID: 883705522}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1095414488
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1095414486}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3fde3806151114feb8a51faf2439648a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  correctAnswer: 1
-  celebrationTimeline: {fileID: 1350819675}
-  puzzleBlocksParent: {fileID: 379080520}
-  hintManager: {fileID: 1487872521}
-  robotAnimator: {fileID: 762199708}
-  disappointedTriggerName: Disappointed
-  wrongAnswerAudioSource: {fileID: 1078995739}
-  wrongAnswerClip: {fileID: 8300000, guid: a2e2fcf630a1947a596cbec4439735c8, type: 3}
-  motivationAudioClip: {fileID: 8300000, guid: a712cf199111940c69d7e9bda92082d7, type: 3}
-  correctAnswerAudioSource: {fileID: 1078995739}
-  correctAnswerClip: {fileID: 8300000, guid: 932b5a24927054e6db1db287b8e19b9b, type: 3}
-  fallbackAudioSource: {fileID: 1078995739}
 --- !u!65 &1095414489
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -16229,6 +16121,37 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1178191175}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1189764468
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1189764469}
+  m_Layer: 0
+  m_Name: attach
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1189764469
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1189764468}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1536365941}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1206518427
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19936,10 +19859,31 @@ PrefabInstance:
       propertyPath: m_Name
       value: is
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: e1aabdbfd9d841c4482e025f4a34c73c,
+        type: 3}
+      propertyPath: m_TagString
+      value: Cube
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: e1aabdbfd9d841c4482e025f4a34c73c,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1189764469}
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e1aabdbfd9d841c4482e025f4a34c73c,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1536365946}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e1aabdbfd9d841c4482e025f4a34c73c,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1536365945}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e1aabdbfd9d841c4482e025f4a34c73c,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1536365944}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e1aabdbfd9d841c4482e025f4a34c73c,
         type: 3}
       insertIndex: -1
@@ -19966,22 +19910,210 @@ MonoBehaviour:
   m_GameObject: {fileID: 1536365942}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e520d0ae436dcb74ebcaa36de6ee7b9e, type: 3}
+  m_Script: {fileID: 11500000, guid: e58a54446a5fa4960a4c9ed4583c2e0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  questionsTimeline: {fileID: 0}
-  correctAnswers: 
-  puzzleBlocksParent: {fileID: 0}
-  hintManager: {fileID: 0}
-  robotAnimator: {fileID: 0}
-  disappointedTriggerName: Disappointed
-  wrongAnswerAudioSource: {fileID: 0}
-  wrongAnswerClip: {fileID: 0}
-  motivationAudioClip: {fileID: 0}
-  correctAnswerAudioSource: {fileID: 0}
-  correctAnswerClip: {fileID: 0}
-  fallbackAudioSource: {fileID: 0}
-  finalCelebrationTimeline: {fileID: 0}
+  value: 1
+--- !u!65 &1536365944
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1536365942}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.002750778, y: 0.001330865, z: 0.0013090546}
+  m_Center: {x: 0.0009188461, y: 0.00041457146, z: -0.0003529116}
+--- !u!114 &1536365945
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1536365942}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ad34abafad169848a38072baa96cdb2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_InteractionManager: {fileID: 581834623}
+  m_Colliders: []
+  m_InteractionLayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_InteractionLayers:
+    m_Bits: 1
+  m_DistanceCalculationMode: 1
+  m_SelectMode: 0
+  m_FocusMode: 1
+  m_CustomReticle: {fileID: 0}
+  m_AllowGazeInteraction: 0
+  m_AllowGazeSelect: 0
+  m_OverrideGazeTimeToSelect: 0
+  m_GazeTimeToSelect: 0.5
+  m_OverrideTimeToAutoDeselectGaze: 0
+  m_TimeToAutoDeselectGaze: 3
+  m_AllowGazeAssistance: 0
+  m_FirstHoverEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_LastHoverExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_HoverEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_HoverExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FirstSelectEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_LastSelectExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_SelectEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_SelectExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FirstFocusEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_LastFocusExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FocusEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FocusExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Activated:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Deactivated:
+    m_PersistentCalls:
+      m_Calls: []
+  m_StartingHoverFilters: []
+  m_StartingSelectFilters: []
+  m_StartingInteractionStrengthFilters: []
+  m_OnFirstHoverEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnLastHoverExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnHoverEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnHoverExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnSelectEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnSelectExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnSelectCanceled:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnActivate:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnDeactivate:
+    m_PersistentCalls:
+      m_Calls: []
+  m_AttachTransform: {fileID: 1189764469}
+  m_SecondaryAttachTransform: {fileID: 0}
+  m_UseDynamicAttach: 0
+  m_MatchAttachPosition: 1
+  m_MatchAttachRotation: 1
+  m_SnapToColliderVolume: 1
+  m_ReinitializeDynamicAttachEverySingleGrab: 1
+  m_AttachEaseInTime: 0.15
+  m_MovementType: 2
+  m_VelocityDamping: 1
+  m_VelocityScale: 1
+  m_AngularVelocityDamping: 1
+  m_AngularVelocityScale: 1
+  m_TrackPosition: 1
+  m_SmoothPosition: 0
+  m_SmoothPositionAmount: 8
+  m_TightenPosition: 0.1
+  m_TrackRotation: 1
+  m_SmoothRotation: 0
+  m_SmoothRotationAmount: 8
+  m_TightenRotation: 0.1
+  m_TrackScale: 1
+  m_SmoothScale: 0
+  m_SmoothScaleAmount: 8
+  m_TightenScale: 0.1
+  m_ThrowOnDetach: 1
+  m_ThrowSmoothingDuration: 0.25
+  m_ThrowSmoothingCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  m_ThrowVelocityScale: 1.5
+  m_ThrowAngularVelocityScale: 1
+  m_ForceGravityOnDetach: 0
+  m_RetainTransformParent: 1
+  m_AttachPointCompatibilityMode: 0
+  m_StartingSingleGrabTransformers: []
+  m_StartingMultipleGrabTransformers: []
+  m_AddDefaultGrabTransformers: 1
+--- !u!54 &1536365946
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1536365942}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 1
 --- !u!1 &1537002552
 GameObject:
   m_ObjectHideFlags: 0
@@ -23525,12 +23657,28 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: aec9c67d2498f4b41beb5e2705b8fa9c,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 736792171}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: aec9c67d2498f4b41beb5e2705b8fa9c,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1860130249}
+      addedObject: {fileID: 1860130253}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: aec9c67d2498f4b41beb5e2705b8fa9c,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1860130252}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: aec9c67d2498f4b41beb5e2705b8fa9c,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1860130251}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: aec9c67d2498f4b41beb5e2705b8fa9c,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1860130250}
   m_SourcePrefab: {fileID: 100100000, guid: aec9c67d2498f4b41beb5e2705b8fa9c, type: 3}
 --- !u!4 &1860130247 stripped
 Transform:
@@ -23544,7 +23692,28 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1860130246}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1860130249
+--- !u!65 &1860130250
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1860130248}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.007030487, y: 0.0013168182, z: 0.0013732235}
+  m_Center: {x: 0.00026258468, y: 0.00042161002, z: -0.00005256288}
+--- !u!114 &1860130251
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -23553,22 +23722,189 @@ MonoBehaviour:
   m_GameObject: {fileID: 1860130248}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e520d0ae436dcb74ebcaa36de6ee7b9e, type: 3}
+  m_Script: {fileID: 11500000, guid: 0ad34abafad169848a38072baa96cdb2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  questionsTimeline: {fileID: 0}
-  correctAnswers: 
-  puzzleBlocksParent: {fileID: 0}
-  hintManager: {fileID: 0}
-  robotAnimator: {fileID: 0}
-  disappointedTriggerName: Disappointed
-  wrongAnswerAudioSource: {fileID: 0}
-  wrongAnswerClip: {fileID: 0}
-  motivationAudioClip: {fileID: 0}
-  correctAnswerAudioSource: {fileID: 0}
-  correctAnswerClip: {fileID: 0}
-  fallbackAudioSource: {fileID: 0}
-  finalCelebrationTimeline: {fileID: 0}
+  m_InteractionManager: {fileID: 581834623}
+  m_Colliders: []
+  m_InteractionLayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_InteractionLayers:
+    m_Bits: 1
+  m_DistanceCalculationMode: 1
+  m_SelectMode: 0
+  m_FocusMode: 1
+  m_CustomReticle: {fileID: 0}
+  m_AllowGazeInteraction: 0
+  m_AllowGazeSelect: 0
+  m_OverrideGazeTimeToSelect: 0
+  m_GazeTimeToSelect: 0.5
+  m_OverrideTimeToAutoDeselectGaze: 0
+  m_TimeToAutoDeselectGaze: 3
+  m_AllowGazeAssistance: 0
+  m_FirstHoverEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_LastHoverExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_HoverEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_HoverExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FirstSelectEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_LastSelectExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_SelectEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_SelectExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FirstFocusEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_LastFocusExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FocusEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FocusExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Activated:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Deactivated:
+    m_PersistentCalls:
+      m_Calls: []
+  m_StartingHoverFilters: []
+  m_StartingSelectFilters: []
+  m_StartingInteractionStrengthFilters: []
+  m_OnFirstHoverEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnLastHoverExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnHoverEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnHoverExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnSelectEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnSelectExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnSelectCanceled:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnActivate:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnDeactivate:
+    m_PersistentCalls:
+      m_Calls: []
+  m_AttachTransform: {fileID: 736792171}
+  m_SecondaryAttachTransform: {fileID: 0}
+  m_UseDynamicAttach: 0
+  m_MatchAttachPosition: 1
+  m_MatchAttachRotation: 1
+  m_SnapToColliderVolume: 1
+  m_ReinitializeDynamicAttachEverySingleGrab: 1
+  m_AttachEaseInTime: 0.15
+  m_MovementType: 2
+  m_VelocityDamping: 1
+  m_VelocityScale: 1
+  m_AngularVelocityDamping: 1
+  m_AngularVelocityScale: 1
+  m_TrackPosition: 1
+  m_SmoothPosition: 0
+  m_SmoothPositionAmount: 8
+  m_TightenPosition: 0.1
+  m_TrackRotation: 1
+  m_SmoothRotation: 0
+  m_SmoothRotationAmount: 8
+  m_TightenRotation: 0.1
+  m_TrackScale: 1
+  m_SmoothScale: 0
+  m_SmoothScaleAmount: 8
+  m_TightenScale: 0.1
+  m_ThrowOnDetach: 1
+  m_ThrowSmoothingDuration: 0.25
+  m_ThrowSmoothingCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  m_ThrowVelocityScale: 1.5
+  m_ThrowAngularVelocityScale: 1
+  m_ForceGravityOnDetach: 0
+  m_RetainTransformParent: 1
+  m_AttachPointCompatibilityMode: 0
+  m_StartingSingleGrabTransformers: []
+  m_StartingMultipleGrabTransformers: []
+  m_AddDefaultGrabTransformers: 1
+--- !u!54 &1860130252
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1860130248}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 1
+--- !u!114 &1860130253
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1860130248}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e58a54446a5fa4960a4c9ed4583c2e0c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  value: 2
 --- !u!1 &1861100748 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 142944, guid: 9c0a6df65fcfba243abb2cf9260b869f,
