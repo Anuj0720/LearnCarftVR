@@ -2859,7 +2859,9 @@ PlayableDirector:
   m_WrapMode: 2
   m_DirectorUpdateMode: 1
   m_InitialTime: 0
-  m_SceneBindings: []
+  m_SceneBindings:
+  - key: {fileID: 7386177756468938454, guid: 55beb2edc487c4d79b3f36e93631d999, type: 2}
+    value: {fileID: 0}
   m_ExposedReferences:
     m_References: []
 --- !u!1 &188924299
@@ -3835,7 +3837,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &257881236
 Transform:
   m_ObjectHideFlags: 0
@@ -16628,12 +16630,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1293728872}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7889e767419100843b76c73a1f49439a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  questionTimeline: {fileID: 1899352735}
+  questionTimeline: {fileID: 0}
   demoBlocksParent: {fileID: 1372659903}
   puzzleBlocksParent: {fileID: 379080520}
   hintManager: {fileID: 1487872521}
@@ -19079,12 +19081,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1533421169}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2a64ed2ee7f9b4a36932a262e6240987, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeline: {fileID: 1899352735}
+  timeline: {fileID: 0}
 --- !u!65 &1533421172
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -26017,7 +26019,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2100894781
 Transform:
   m_ObjectHideFlags: 0
@@ -26046,7 +26048,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   questionTimelines:
-  - {fileID: 1899352735}
+  - {fileID: 0}
   - {fileID: 257881237}
   celebrationTimeline: {fileID: 1350819675}
   answerChecker: {fileID: 483793338}
