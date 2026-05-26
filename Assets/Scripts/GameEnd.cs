@@ -1,215 +1,225 @@
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class GameEnd : MonoBehaviour
 {
-    // ─────────────────────────────────────────────────────────────────────────
-    //  INSPECTOR FIELDS
-    // ─────────────────────────────────────────────────────────────────────────
-
-    [Header("Scene Names (must match Build Settings exactly)")]
-    public string mathsSceneName   = "Maths";
+    [Header("Scene Settings")]
+    public string menuSceneName   = "Menu";
+    public string mathsSceneName  = "Maths";
     public string englishSceneName = "Scene_2";
 
-    [Header("Celebration Timeline (Room4 of THIS scene)")]
+    [Header("Manual Scene Override")]
+    [Tooltip("If you want to tell the script which scene you are in, fill this. Otherwise the active scene name is used.")]
+    public string currentSceneOverride;
+
+    [Header("Timeline References")]
     public PlayableDirector celebrationTimeline;
+    public PlayableDirector gameEndTimeline;
 
-    [Header("Game Ending Timeline (assign in BOTH Maths and English scenes)")]
-    public PlayableDirector gameEndingTimeline;
+    [Header("Transition Settings")]
+    [Tooltip("Seconds to wait after celebration ends before the next scene starts.")]
+    public float celebrationTransitionDelay = 1.0f;
 
-    // ─────────────────────────────────────────────────────────────────────────
-    //  PRIVATE
-    // ─────────────────────────────────────────────────────────────────────────
+    [Header("Count Tracking")]
+    [Tooltip("The game flow count: 0 = menu, 2 = first module entered, 3 = second module entered.")]
+    public int count;
 
     private SceneLoader sceneLoader;
-    private bool        sequenceStarted      = false;
-    private bool        celebrationHasPlayed = false; // true once timeline enters Playing state
-    private bool        watchingCelebration  = false; // true while we are polling Update
+    private bool        celebrationHasPlayed = false;
+    private bool        watchingCelebration  = false;
 
-    private const string VISIT_COUNT_KEY  = "GameVisitCount";
-    private const string FIRST_CHOICE_KEY = "FirstSceneChoice";
+    private const string COUNT_KEY = "GameCount";
 
-    // ─────────────────────────────────────────────────────────────────────────
-    //  UNITY LIFECYCLE
-    // ─────────────────────────────────────────────────────────────────────────
+    void Awake()
+    {
+        sceneLoader = SceneLoader.Instance;
+        if (sceneLoader == null)
+            sceneLoader = FindObjectOfType<SceneLoader>();
+
+        if (sceneLoader == null)
+            Debug.LogWarning("[GameEnd] No SceneLoader found in scene.");
+    }
 
     void Start()
     {
-        sceneLoader = FindObjectOfType<SceneLoader>();
+        count = PlayerPrefs.GetInt(COUNT_KEY, 0);
+        string activeScene = GetCurrentSceneName();
 
-        if (sceneLoader == null)
-            Debug.LogWarning("GameEnd: No SceneLoader found in scene!");
+        if (activeScene == menuSceneName)
+        {
+            SetCount(0);
+            Debug.Log("[GameEnd] Menu scene detected. Count set to 0.");
+        }
+        else if (count < 2 && (activeScene == mathsSceneName || activeScene == englishSceneName))
+        {
+            SetCount(2);
+            Debug.Log($"[GameEnd] Module scene detected with missing saved count. Count forced to 2. Scene={activeScene}");
+        }
 
         if (celebrationTimeline == null)
         {
-            Debug.LogWarning("GameEnd: celebrationTimeline is NOT assigned!");
+            Debug.LogWarning("[GameEnd] celebrationTimeline is NOT assigned.");
             return;
         }
 
-        // Make sure gameEndingTimeline is stopped at scene start
-        if (gameEndingTimeline != null)
-            gameEndingTimeline.Stop();
+        if (gameEndTimeline != null)
+            gameEndTimeline.Stop();
 
-        // Start watching the celebration timeline every frame
-        watchingCelebration = true;
+        celebrationHasPlayed = false;
+        watchingCelebration  = true;
 
-        Debug.Log($"GameEnd: Ready. Watching celebrationTimeline → {celebrationTimeline.name}");
+        Debug.Log($"[GameEnd] Ready. Current scene: {activeScene}, Count={count}");
     }
 
     void Update()
     {
         if (!watchingCelebration || celebrationTimeline == null) return;
 
-        PlayableDirector pd = celebrationTimeline;
-
-        // Step 1 — Detect that it has actually started playing
         if (!celebrationHasPlayed)
         {
-            if (pd.state == PlayState.Playing)
+            if (celebrationTimeline.state == PlayState.Playing)
             {
                 celebrationHasPlayed = true;
-                Debug.Log("GameEnd: Celebration timeline is NOW PLAYING.");
+                Debug.Log("[GameEnd] Celebration timeline started.");
             }
-            return; // wait until it starts before we check for finish
+            return;
         }
 
-        // Step 2 — It has played before; now detect it stopped/paused = finished
-        if (celebrationHasPlayed && pd.state != PlayState.Playing)
+        if (celebrationHasPlayed && celebrationTimeline.state != PlayState.Playing)
         {
-            watchingCelebration = false; // stop polling
-            Debug.Log("GameEnd: Celebration timeline FINISHED.");
+            watchingCelebration = false;
+            Debug.Log("[GameEnd] Celebration timeline ended.");
             OnCelebrationFinished();
         }
     }
 
-    void OnDestroy()
-    {
-        watchingCelebration = false;
-    }
-
-    // ─────────────────────────────────────────────────────────────────────────
-    //  PUBLIC — called from Menu buttons
-    // ─────────────────────────────────────────────────────────────────────────
-
     public void OnMenuChooseMaths()
     {
-        ResetProgress();
-        PlayerPrefs.SetString(FIRST_CHOICE_KEY, "Maths");
-        PlayerPrefs.Save();
-        sceneLoader.LoadSceneByName(mathsSceneName);
+        Debug.Log("[GameEnd] Menu choice: Maths");
+        SetCount(2);
+        TransitionToScene(mathsSceneName);
     }
 
     public void OnMenuChooseEnglish()
     {
-        ResetProgress();
-        PlayerPrefs.SetString(FIRST_CHOICE_KEY, "English");
-        PlayerPrefs.Save();
-        sceneLoader.LoadSceneByName(englishSceneName);
+        Debug.Log("[GameEnd] Menu choice: English");
+        SetCount(2);
+        TransitionToScene(englishSceneName);
     }
-
-    // ─────────────────────────────────────────────────────────────────────────
-    //  CELEBRATION FINISHED — called from Update once state leaves Playing
-    // ─────────────────────────────────────────────────────────────────────────
 
     private void OnCelebrationFinished()
     {
-        if (sequenceStarted) return;
-        sequenceStarted = true;
+        string currentScene = GetCurrentSceneName();
+        count = PlayerPrefs.GetInt(COUNT_KEY, 0);
 
-        string firstChoice  = PlayerPrefs.GetString(FIRST_CHOICE_KEY, "");
-        string currentScene = SceneManager.GetActiveScene().name;
-        int    visitCount   = PlayerPrefs.GetInt(VISIT_COUNT_KEY, 0);
+        Debug.Log($"[GameEnd] Celebration finished in scene: {currentScene}. Count={count}");
 
-        Debug.Log($"GameEnd: Processing end | firstChoice={firstChoice} | currentScene={currentScene} | visitCount={visitCount}");
-
-        if (IsLastScene(firstChoice, currentScene))
+        if (count == 3)
         {
-            // ── Second scene completed → play game ending timeline ────────────
-            Debug.Log("GameEnd: LAST SCENE → Starting game ending timeline.");
-            StartCoroutine(PlayGameEndingAfterDelay());
+            Debug.Log("[GameEnd] Count is 3. Final celebration complete. Playing game end timeline.");
+            StartCoroutine(PlayGameEndTimeline());
+            return;
         }
-        else
+
+        if (count == 2)
         {
-            // ── First scene completed → set count to 1 → go to next scene ────
-            PlayerPrefs.SetInt(VISIT_COUNT_KEY, 1);
-            PlayerPrefs.Save();
+            string nextScene = GetNextScene(currentScene);
+            if (string.IsNullOrEmpty(nextScene))
+            {
+                Debug.LogWarning("[GameEnd] Could not determine next scene after celebration.");
+                return;
+            }
 
-            string nextScene = (currentScene == mathsSceneName)
-                ? englishSceneName
-                : mathsSceneName;
-
-            Debug.Log($"GameEnd: FIRST SCENE done. Count = 1. Transitioning to → {nextScene}");
-            sceneLoader.LoadSceneByName(nextScene);
+            SetCount(3);
+            Debug.Log($"[GameEnd] First module complete. Count set to 3. Waiting {celebrationTransitionDelay} seconds before loading: {nextScene}");
+            StartCoroutine(TransitionToSceneAfterDelay(nextScene));
+            return;
         }
-    }
 
-    // Small delay to let any celebrationTimeline cleanup finish
-    // before game ending timeline starts
-    private System.Collections.IEnumerator PlayGameEndingAfterDelay()
-    {
-        yield return new WaitForSeconds(0.5f);
-
-        if (gameEndingTimeline != null)
-        {
-            gameEndingTimeline.Play();
-            Debug.Log("GameEnd: Game ending timeline is now PLAYING.");
-
-            // Wait for game ending timeline to finish, then go back to menu
-            yield return StartCoroutine(WaitForTimelineAndGoToMenu());
-        }
-        else
-        {
-            Debug.LogWarning("GameEnd: gameEndingTimeline is NOT assigned!");
-        }
-    }
-
-    // Polls game ending timeline until it finishes, then loads menu
-    private System.Collections.IEnumerator WaitForTimelineAndGoToMenu()
-    {
-        // Wait for it to start playing first
-        yield return new WaitUntil(() =>
-            gameEndingTimeline != null &&
-            gameEndingTimeline.state == PlayState.Playing);
-
-        Debug.Log("GameEnd: Waiting for game ending timeline to finish...");
-
-        // Wait until it stops
-        yield return new WaitUntil(() =>
-            gameEndingTimeline == null ||
-            gameEndingTimeline.state != PlayState.Playing);
-
-        Debug.Log("GameEnd: Game ending timeline FINISHED. Returning to menu.");
-
+        Debug.LogWarning($"[GameEnd] Unexpected count value ({count}) after celebration. Resetting to menu.");
         ResetProgress();
-        sceneLoader.LoadSceneByName("Menu");
+        TransitionToScene(menuSceneName);
     }
 
-    // ─────────────────────────────────────────────────────────────────────────
-    //  LAST SCENE DETECTION
-    //  Maths first  → last scene is English
-    //  English first → last scene is Maths
-    // ─────────────────────────────────────────────────────────────────────────
-
-    private bool IsLastScene(string firstChoice, string currentScene)
+    private IEnumerator PlayGameEndTimeline()
     {
-        if (firstChoice == "Maths"   && currentScene == englishSceneName) return true;
-        if (firstChoice == "English" && currentScene == mathsSceneName)   return true;
-        return false;
+        if (gameEndTimeline == null)
+        {
+            Debug.LogWarning("[GameEnd] gameEndTimeline is not assigned. Returning to menu.");
+            ResetProgress();
+            TransitionToScene(menuSceneName);
+            yield break;
+        }
+
+        gameEndTimeline.Play();
+        Debug.Log("[GameEnd] Game end timeline started.");
+
+        yield return new WaitUntil(() => gameEndTimeline.state != PlayState.Playing);
+
+        Debug.Log("[GameEnd] Game end timeline finished. Returning to menu.");
+        ResetProgress();
+        TransitionToScene(menuSceneName);
     }
 
-    // ─────────────────────────────────────────────────────────────────────────
-    //  UTILITY
-    // ─────────────────────────────────────────────────────────────────────────
+    private string GetCurrentSceneName()
+    {
+        if (!string.IsNullOrEmpty(currentSceneOverride))
+            return currentSceneOverride;
+
+        return SceneManager.GetActiveScene().name;
+    }
+
+    private string GetNextScene(string currentScene)
+    {
+        if (currentScene == mathsSceneName)
+            return englishSceneName;
+
+        if (currentScene == englishSceneName)
+            return mathsSceneName;
+
+        return string.Empty;
+    }
+
+    private void TransitionToScene(string sceneName)
+    {
+        if (sceneLoader == null)
+        {
+            sceneLoader = SceneLoader.Instance;
+            if (sceneLoader == null)
+                sceneLoader = FindObjectOfType<SceneLoader>();
+        }
+
+        if (sceneLoader == null)
+        {
+            Debug.LogWarning($"[GameEnd] SceneLoader is missing in current scene. Falling back to direct load: {sceneName}");
+            SceneManager.LoadScene(sceneName);
+            return;
+        }
+
+        Debug.Log($"[GameEnd] Transitioning to scene: {sceneName}");
+        sceneLoader.LoadSceneByName(sceneName);
+    }
+
+    private IEnumerator TransitionToSceneAfterDelay(string sceneName)
+    {
+        yield return new WaitForSeconds(celebrationTransitionDelay);
+        TransitionToScene(sceneName);
+    }
+
+    private void SetCount(int value)
+    {
+        count = value;
+        PlayerPrefs.SetInt(COUNT_KEY, value);
+        PlayerPrefs.Save();
+    }
 
     public void ResetProgress()
     {
-        PlayerPrefs.SetInt(VISIT_COUNT_KEY, 0);
-        PlayerPrefs.DeleteKey(FIRST_CHOICE_KEY);
-        PlayerPrefs.Save();
-        sequenceStarted      = false;
+        SetCount(0);
         celebrationHasPlayed = false;
         watchingCelebration  = celebrationTimeline != null;
-        Debug.Log("GameEnd: Progress reset.");
+        Debug.Log("[GameEnd] Progress reset.");
     }
 }

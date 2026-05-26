@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class SceneLoader : MonoBehaviour
 {
+    public static SceneLoader Instance { get; private set; }
+
     [Header("Fade Settings")]
     public Color fadeColor = Color.black;
     public float fadeSpeed = 1.5f;
@@ -15,6 +17,15 @@ public class SceneLoader : MonoBehaviour
 
     void Awake()
     {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+
         audioSource = gameObject.AddComponent<AudioSource>();
         audioSource.playOnAwake = false;
     }

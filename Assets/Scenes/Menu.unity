@@ -2823,11 +2823,10 @@ MonoBehaviour:
   menuSceneName: Menu
   mathsSceneName: Maths
   englishSceneName: Scene_2
+  currentSceneOverride: Menu
   celebrationTimeline: {fileID: 0}
-  gameEndingTimeline: {fileID: 0}
-  fadeColor: {r: 0, g: 0, b: 0, a: 1}
-  fadeSpeed: 1.5
-  transitionSound: {fileID: 8300000, guid: 3fce5fbf542874773b1fc9824d39b642, type: 3}
+  gameEndTimeline: {fileID: 0}
+  count: 0
 --- !u!4 &1071407166
 Transform:
   m_ObjectHideFlags: 0
