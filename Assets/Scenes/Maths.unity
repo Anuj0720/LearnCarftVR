@@ -7470,14 +7470,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1aa27bd8d267476db3ecd7700aa1e8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  menuSceneName: Menu
   mathsSceneName: Maths
   englishSceneName: Scene_2
   celebrationTimeline: {fileID: 904902418}
   gameEndingTimeline: {fileID: 1347311663}
-  fadeColor: {r: 0, g: 0, b: 0, a: 1}
-  fadeSpeed: 1.5
-  transitionSound: {fileID: 8300000, guid: 3fce5fbf542874773b1fc9824d39b642, type: 3}
 --- !u!4 &553821073
 Transform:
   m_ObjectHideFlags: 0
@@ -10576,7 +10572,7 @@ PlayableDirector:
   m_Enabled: 1
   serializedVersion: 3
   m_PlayableAsset: {fileID: 11400000, guid: bd2b15b13cf60439bae9aa3239182771, type: 2}
-  m_InitialState: 0
+  m_InitialState: 1
   m_WrapMode: 2
   m_DirectorUpdateMode: 1
   m_InitialTime: 0
