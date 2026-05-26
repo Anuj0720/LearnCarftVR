@@ -14076,7 +14076,6 @@ GameObject:
   - component: {fileID: 1021239754}
   - component: {fileID: 1021239757}
   - component: {fileID: 1021239756}
-  - component: {fileID: 1021239755}
   m_Layer: 0
   m_Name: Answer socket
   m_TagString: Untagged
@@ -14100,30 +14099,6 @@ Transform:
   - {fileID: 725889831}
   m_Father: {fileID: 1900333224}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1021239755
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1021239753}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3fde3806151114feb8a51faf2439648a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  correctAnswer: 1
-  celebrationTimeline: {fileID: 1350819675}
-  puzzleBlocksParent: {fileID: 379080520}
-  hintManager: {fileID: 1487872521}
-  robotAnimator: {fileID: 762199708}
-  disappointedTriggerName: Disappointed
-  wrongAnswerAudioSource: {fileID: 1078995739}
-  wrongAnswerClip: {fileID: 8300000, guid: a2e2fcf630a1947a596cbec4439735c8, type: 3}
-  motivationAudioClip: {fileID: 8300000, guid: a712cf199111940c69d7e9bda92082d7, type: 3}
-  correctAnswerAudioSource: {fileID: 1078995739}
-  correctAnswerClip: {fileID: 8300000, guid: 932b5a24927054e6db1db287b8e19b9b, type: 3}
-  fallbackAudioSource: {fileID: 1078995739}
 --- !u!65 &1021239756
 BoxCollider:
   m_ObjectHideFlags: 0
