@@ -9503,6 +9503,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetPosition: {fileID: 273910592}
   xrRig: {fileID: 1105430431}
+  xrCamera: {fileID: 445736108}
   fadeColor: {r: 0, g: 0, b: 0, a: 1}
   fadeSpeed: 1.5
   teleportSound: {fileID: 8300000, guid: 3fce5fbf542874773b1fc9824d39b642, type: 3}
@@ -13072,6 +13073,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetPosition: {fileID: 1238609976}
   xrRig: {fileID: 1105430431}
+  xrCamera: {fileID: 445736108}
   fadeColor: {r: 0, g: 0, b: 0, a: 1}
   fadeSpeed: 1.5
   teleportSound: {fileID: 8300000, guid: 3fce5fbf542874773b1fc9824d39b642, type: 3}
@@ -23340,6 +23342,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetPosition: {fileID: 766028929}
   xrRig: {fileID: 1105430431}
+  xrCamera: {fileID: 445736108}
   fadeColor: {r: 0, g: 0, b: 0, a: 1}
   fadeSpeed: 1.5
   teleportSound: {fileID: 8300000, guid: 3fce5fbf542874773b1fc9824d39b642, type: 3}

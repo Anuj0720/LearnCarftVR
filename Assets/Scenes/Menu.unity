@@ -1235,7 +1235,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Texture: {fileID: 2800000, guid: 4bf4e52551443494a922883afc92a9eb, type: 3}
+  m_Texture: {fileID: 2800000, guid: d6ecff4679e86a74e90788453d4d9827, type: 3}
   m_UVRect:
     serializedVersion: 2
     x: 0
@@ -2185,14 +2185,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.624838, g: 0.58846563, b: 0.7169812, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Texture: {fileID: 2800000, guid: 4bf4e52551443494a922883afc92a9eb, type: 3}
+  m_Texture: {fileID: 2800000, guid: 5346e13fda74e804796856a1d9a9c491, type: 3}
   m_UVRect:
     serializedVersion: 2
     x: 0
@@ -2826,6 +2826,7 @@ MonoBehaviour:
   currentSceneOverride: Menu
   celebrationTimeline: {fileID: 0}
   gameEndTimeline: {fileID: 0}
+  celebrationTransitionDelay: 1
   count: 0
 --- !u!4 &1071407166
 Transform:
