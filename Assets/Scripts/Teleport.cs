@@ -8,6 +8,9 @@ public class Teleport : MonoBehaviour
     public Transform targetPosition;
     public Transform xrRig;
 
+    [Header("XR Camera (assign your Main Camera / CenterEyeAnchor)")]
+    public Camera xrCamera;
+
     [Header("Fade Settings")]
     public Color fadeColor = Color.black;
     public float fadeSpeed = 1.5f;
@@ -24,13 +27,16 @@ public class Teleport : MonoBehaviour
     // Fade overlay
     private Canvas fadeCanvas;
     private Image fadeImage;
-    private bool isFading = false;
 
     void Awake()
     {
         audioSource = gameObject.AddComponent<AudioSource>();
         audioSource.playOnAwake = false;
         CreateFadeOverlay();
+
+        // Auto-find the XR camera if not assigned
+        if (xrCamera == null)
+            xrCamera = Camera.main;
     }
 
     void Start()
@@ -48,17 +54,15 @@ public class Teleport : MonoBehaviour
     // ── Creates a full-screen black UI overlay ────────────────────────────────
     void CreateFadeOverlay()
     {
-        // Canvas
         GameObject canvasGO = new GameObject("TeleportFadeCanvas");
         DontDestroyOnLoad(canvasGO);
         fadeCanvas = canvasGO.AddComponent<Canvas>();
         fadeCanvas.renderMode = RenderMode.ScreenSpaceOverlay;
-        fadeCanvas.sortingOrder = 999; // Always on top
+        fadeCanvas.sortingOrder = 999;
 
         canvasGO.AddComponent<CanvasScaler>();
         canvasGO.AddComponent<GraphicRaycaster>();
 
-        // Full-screen Image
         GameObject imgGO = new GameObject("FadeImage");
         imgGO.transform.SetParent(canvasGO.transform, false);
         fadeImage = imgGO.AddComponent<Image>();
@@ -69,7 +73,6 @@ public class Teleport : MonoBehaviour
         rect.offsetMin = Vector2.zero;
         rect.offsetMax = Vector2.zero;
 
-        // Start fully transparent
         fadeImage.color = new Color(fadeColor.r, fadeColor.g, fadeColor.b, 0f);
     }
 
@@ -116,8 +119,7 @@ public class Teleport : MonoBehaviour
         float elapsed = 0f;
         float duration = 1f / fadeSpeed;
 
-        Color c = new Color(fadeColor.r, fadeColor.g, fadeColor.b, fromAlpha);
-        fadeImage.color = c;
+        fadeImage.color = new Color(fadeColor.r, fadeColor.g, fadeColor.b, fromAlpha);
 
         while (elapsed < duration)
         {
@@ -130,7 +132,7 @@ public class Teleport : MonoBehaviour
         fadeImage.color = new Color(fadeColor.r, fadeColor.g, fadeColor.b, toAlpha);
     }
 
-    // ── Moves the XR Rig to target ────────────────────────────────────────────
+    // ── Moves the XR Rig to target with camera offset compensation ────────────
     void MoveXRRig()
     {
         if (xrRig == null)
@@ -145,7 +147,33 @@ public class Teleport : MonoBehaviour
             return;
         }
 
-        xrRig.position = targetPosition.position;
+        // --- CAMERA OFFSET COMPENSATION FIX ---
+        // In XR, the camera drifts from the rig origin due to real-world head tracking.
+        // We must subtract the horizontal (X/Z) camera-to-rig offset so the camera
+        // lands exactly at the target instead of being displaced outside the area.
+
+        if (xrCamera != null)
+        {
+            // Horizontal offset between rig root and the actual camera position
+            Vector3 cameraWorldPos = xrCamera.transform.position;
+            Vector3 rigWorldPos    = xrRig.position;
+
+            float offsetX = cameraWorldPos.x - rigWorldPos.x;
+            float offsetZ = cameraWorldPos.z - rigWorldPos.z;
+
+            // Place the rig so the camera ends up exactly at the target XZ position.
+            // Use the target's Y directly for the rig so the floor stays correct.
+            xrRig.position = new Vector3(
+                targetPosition.position.x - offsetX,
+                targetPosition.position.y,          // target Y = floor level for the rig
+                targetPosition.position.z - offsetZ
+            );
+        }
+        else
+        {
+            // Fallback: no camera reference, place rig directly (original behaviour)
+            xrRig.position = targetPosition.position;
+        }
 
         // Only rotate on Y axis to avoid tilting the rig
         Vector3 currentRotation = xrRig.eulerAngles;
@@ -155,6 +183,6 @@ public class Teleport : MonoBehaviour
             currentRotation.z
         );
 
-        Debug.Log($"XR Rig teleported to {targetPosition.position}");
+        Debug.Log($"XR Rig teleported to {xrRig.position} (camera now at ~{targetPosition.position})");
     }
 }
