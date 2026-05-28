@@ -8,7 +8,7 @@ public class Teleport : MonoBehaviour
     public Transform targetPosition;
     public Transform xrRig;
 
-    [Header("XR Camera (assign your Main Camera / CenterEyeAnchor)")]
+    [Header("XR Camera")]
     public Camera xrCamera;
 
     [Header("Fade Settings")]
@@ -21,10 +21,19 @@ public class Teleport : MonoBehaviour
     [Header("Timeline (Optional)")]
     public PlayableDirector celebrationTimeline;
 
+    [Header("VFX Settings")]
+    public ParticleSystem teleportVFXPrefab;
+    public float vfxScale = 1f;
+
+    private ParticleSystem spawnedVFX;
     private AudioSource audioSource;
     private bool teleportTriggered = false;
 
-    // Fade overlay
+    // Store the desired teleport destination as soon as teleport is triggered
+    private Vector3 pendingPosition;
+    private Quaternion pendingRotation;
+    private bool hasPendingTarget = false;
+
     private Canvas fadeCanvas;
     private Image fadeImage;
 
@@ -34,7 +43,6 @@ public class Teleport : MonoBehaviour
         audioSource.playOnAwake = false;
         CreateFadeOverlay();
 
-        // Auto-find the XR camera if not assigned
         if (xrCamera == null)
             xrCamera = Camera.main;
     }
@@ -51,7 +59,6 @@ public class Teleport : MonoBehaviour
             celebrationTimeline.stopped -= OnTimelineFinished;
     }
 
-    // ── Creates a full-screen black UI overlay ────────────────────────────────
     void CreateFadeOverlay()
     {
         GameObject canvasGO = new GameObject("TeleportFadeCanvas");
@@ -76,44 +83,121 @@ public class Teleport : MonoBehaviour
         fadeImage.color = new Color(fadeColor.r, fadeColor.g, fadeColor.b, 0f);
     }
 
-    // ── Timeline callback ─────────────────────────────────────────────────────
     private void OnTimelineFinished(PlayableDirector director)
     {
         if (!teleportTriggered)
             TriggerTeleport();
     }
 
-    // ── Main entry point (also callable from Signal Receiver) ─────────────────
     public void TriggerTeleport()
     {
         if (teleportTriggered) return;
         teleportTriggered = true;
 
+        // Capture the target world position/rotation now so player movement
+        // before the actual teleport doesn't change the destination.
+        if (targetPosition != null)
+        {
+            pendingPosition = targetPosition.position;
+            pendingRotation = targetPosition.rotation;
+            hasPendingTarget = true;
+        }
+        else
+        {
+            hasPendingTarget = false;
+        }
+
         if (teleportSound != null)
             audioSource.PlayOneShot(teleportSound);
 
+        PlayVFX();
         StartCoroutine(TeleportSequence());
     }
 
-    // ── Full fade-out → teleport → fade-in sequence ───────────────────────────
     private System.Collections.IEnumerator TeleportSequence()
     {
-        // 1. Fade OUT to black
+        // Fade out
         yield return StartCoroutine(Fade(0f, 1f));
 
-        // 2. Move XR Rig while screen is black
+        // Move directly to target
         MoveXRRig();
 
-        // Small pause so the new location renders before revealing
         yield return new WaitForSeconds(0.1f);
 
-        // 3. Fade IN back to clear
+        // Fade in
         yield return StartCoroutine(Fade(1f, 0f));
+
+        // Destroy VFX
+        StopVFX();
 
         teleportTriggered = false;
     }
 
-    // ── Smooth alpha fade coroutine ───────────────────────────────────────────
+    void MoveXRRig()
+{
+        if (xrRig == null) return;
+
+        // Determine destination: prefer the captured pending target (captured at trigger time),
+        // otherwise fall back to the current targetPosition transform.
+        Vector3 destination;
+        Quaternion destinationRotation;
+
+        if (hasPendingTarget)
+        {
+            destination = pendingPosition;
+            destinationRotation = pendingRotation;
+        }
+        else if (targetPosition != null)
+        {
+            destination = targetPosition.position;
+            destinationRotation = targetPosition.rotation;
+        }
+        else
+        {
+            // Nothing to do
+            return;
+        }
+
+        // Move xrRig to the computed destination
+        xrRig.position = destination;
+        xrRig.rotation = destinationRotation;
+
+        // Reset tracking space so camera recenters on rig
+        Unity.XR.CoreUtils.XROrigin xrOrigin = xrRig.GetComponent<Unity.XR.CoreUtils.XROrigin>();
+        if (xrOrigin != null)
+        {
+            xrOrigin.MoveCameraToWorldLocation(destination);
+        }
+
+        hasPendingTarget = false;
+
+        Debug.Log("Teleported to: " + destination);
+}
+
+    void PlayVFX()
+    {
+        if (teleportVFXPrefab == null) return;
+
+        Vector3 spawnPosition = xrCamera != null
+            ? xrCamera.transform.position
+            : transform.position;
+
+        spawnedVFX = Instantiate(teleportVFXPrefab, spawnPosition, Quaternion.identity);
+        spawnedVFX.transform.localScale = Vector3.one * vfxScale;
+        spawnedVFX.Play();
+
+        Debug.Log("Teleport VFX Started");
+    }
+
+    void StopVFX()
+    {
+        if (spawnedVFX == null) return;
+        spawnedVFX.Stop();
+        Destroy(spawnedVFX.gameObject);
+        spawnedVFX = null;
+        Debug.Log("Teleport VFX Destroyed");
+    }
+
     private System.Collections.IEnumerator Fade(float fromAlpha, float toAlpha)
     {
         float elapsed = 0f;
@@ -130,59 +214,5 @@ public class Teleport : MonoBehaviour
         }
 
         fadeImage.color = new Color(fadeColor.r, fadeColor.g, fadeColor.b, toAlpha);
-    }
-
-    // ── Moves the XR Rig to target with camera offset compensation ────────────
-    void MoveXRRig()
-    {
-        if (xrRig == null)
-        {
-            Debug.LogWarning("Teleport: XR Rig is not assigned!");
-            return;
-        }
-
-        if (targetPosition == null)
-        {
-            Debug.LogWarning("Teleport: Target Position is not assigned!");
-            return;
-        }
-
-        // --- CAMERA OFFSET COMPENSATION FIX ---
-        // In XR, the camera drifts from the rig origin due to real-world head tracking.
-        // We must subtract the horizontal (X/Z) camera-to-rig offset so the camera
-        // lands exactly at the target instead of being displaced outside the area.
-
-        if (xrCamera != null)
-        {
-            // Horizontal offset between rig root and the actual camera position
-            Vector3 cameraWorldPos = xrCamera.transform.position;
-            Vector3 rigWorldPos    = xrRig.position;
-
-            float offsetX = cameraWorldPos.x - rigWorldPos.x;
-            float offsetZ = cameraWorldPos.z - rigWorldPos.z;
-
-            // Place the rig so the camera ends up exactly at the target XZ position.
-            // Use the target's Y directly for the rig so the floor stays correct.
-            xrRig.position = new Vector3(
-                targetPosition.position.x - offsetX,
-                targetPosition.position.y,          // target Y = floor level for the rig
-                targetPosition.position.z - offsetZ
-            );
-        }
-        else
-        {
-            // Fallback: no camera reference, place rig directly (original behaviour)
-            xrRig.position = targetPosition.position;
-        }
-
-        // Only rotate on Y axis to avoid tilting the rig
-        Vector3 currentRotation = xrRig.eulerAngles;
-        xrRig.eulerAngles = new Vector3(
-            currentRotation.x,
-            targetPosition.eulerAngles.y,
-            currentRotation.z
-        );
-
-        Debug.Log($"XR Rig teleported to {xrRig.position} (camera now at ~{targetPosition.position})");
     }
 }
