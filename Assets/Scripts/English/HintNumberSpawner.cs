@@ -1,16 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>
-/// Spawns 3D number prefabs above each unsolved word block when the hint fires.
-///
-/// FIX: wordBlocks list is now populated DYNAMICALLY at hint-time using
-/// FindObjectsByType<WordBlockData>() — so blocks that are spawned/activated
-/// by Timeline activation tracks are found correctly even though they didn't
-/// exist at scene Start.
-///
-/// You do NOT need to manually fill the Word Blocks list in the Inspector.
-/// </summary>
+[ExecuteAlways]
 public class HintNumberSpawner : MonoBehaviour
 {
     [Header("Option A – One prefab per number  (recommended)")]
@@ -19,32 +10,36 @@ public class HintNumberSpawner : MonoBehaviour
     public GameObject[] numberPrefabs;
 
     [Header("Option B – Single prefab with a text component")]
-    [Tooltip("Enable this to use ONE prefab for all numbers (needs TextMesh or TMPro on it).")]
     public bool useSinglePrefabWithText = false;
-    [Tooltip("Prefab with TextMesh / TextMeshPro. Used only when Option B is enabled.")]
     public GameObject numberTextPrefab;
 
     [Header("Position")]
-    [Tooltip("Offset from the block's world position where the number appears.")]
     public Vector3 spawnOffset = new Vector3(0f, 0.25f, 0f);
 
-    // ── Runtime ───────────────────────────────────────────────────────────────
-    // Maps WordBlockData → its spawned number GameObject
+    [Header("Rotation (Live — changes apply instantly in Play Mode)")]
+    public Vector3 spawnRotation = new Vector3(0f, 0f, 0f);
+
     private Dictionary<WordBlockData, GameObject> _spawnedMap
         = new Dictionary<WordBlockData, GameObject>();
 
-    // ── Public API ────────────────────────────────────────────────────────────
+    // ── Live rotation update ──────────────────────────────────────────────────
+    void Update()
+    {
+        if (_spawnedMap.Count == 0) return;
 
-    /// <summary>
-    /// Called by HintsManager when the hint delay expires.
-    /// Dynamically finds all active WordBlockData objects in the scene.
-    /// </summary>
+        Quaternion rot = Quaternion.Euler(spawnRotation);
+        foreach (var kvp in _spawnedMap)
+        {
+            if (kvp.Value != null)
+                kvp.Value.transform.rotation = rot;
+        }
+    }
+
+    // ── Public API ────────────────────────────────────────────────────────────
     public void ShowHints()
     {
-        HideAllHints(); // destroy any previous hint numbers first
+        HideAllHints();
 
-        // Find ALL WordBlockData currently active in the scene
-        // (includes blocks activated mid-game by Timeline activation tracks)
 #if UNITY_2023_1_OR_NEWER
         WordBlockData[] allBlocks = FindObjectsByType<WordBlockData>(FindObjectsSortMode.None);
 #else
@@ -53,8 +48,7 @@ public class HintNumberSpawner : MonoBehaviour
 
         if (allBlocks.Length == 0)
         {
-            Debug.LogWarning("[HintNumberSpawner] No WordBlockData found in scene. " +
-                             "Make sure blocks are active before hint fires.", this);
+            Debug.LogWarning("[HintNumberSpawner] No WordBlockData found in scene.", this);
             return;
         }
 
@@ -68,7 +62,6 @@ public class HintNumberSpawner : MonoBehaviour
 
             if (numObj != null)
             {
-                // Parent to block so it moves with it
                 numObj.transform.SetParent(block.transform, worldPositionStays: true);
                 block.spawnedHintNumber = numObj;
                 _spawnedMap[block] = numObj;
@@ -79,7 +72,6 @@ public class HintNumberSpawner : MonoBehaviour
         Debug.Log($"[HintNumberSpawner] Showing {spawned} hint number(s) over {allBlocks.Length} block(s).");
     }
 
-    /// <summary>Destroys all spawned hint numbers and clears state.</summary>
     public void HideAllHints()
     {
         foreach (var kvp in _spawnedMap)
@@ -91,65 +83,47 @@ public class HintNumberSpawner : MonoBehaviour
     }
 
     // ── Spawn helper ──────────────────────────────────────────────────────────
-
     GameObject SpawnNumber(int zeroIndex, Vector3 worldPos)
     {
+        Quaternion rotation = Quaternion.Euler(spawnRotation);
+
         if (useSinglePrefabWithText)
         {
-            // ── Option B ─────────────────────────────────────────────────────
             if (numberTextPrefab == null)
             {
-                Debug.LogError("[HintNumberSpawner] Option B: 'numberTextPrefab' is null! " +
-                               "Assign a prefab with a TextMesh or TMPro component.", this);
+                Debug.LogError("[HintNumberSpawner] Option B: 'numberTextPrefab' is null!", this);
                 return null;
             }
 
-            GameObject obj = Instantiate(numberTextPrefab, worldPos, Quaternion.identity);
+            GameObject obj = Instantiate(numberTextPrefab, worldPos, rotation);
             obj.name = $"HintNum_{zeroIndex + 1}";
 
-            // ── TextMeshPro (3D) ──
-            // Uncomment the next two lines if your prefab uses TMPro:
-            // TMPro.TextMeshPro tmp = obj.GetComponentInChildren<TMPro.TextMeshPro>(true);
-            // if (tmp != null) { tmp.text = (zeroIndex + 1).ToString(); return obj; }
-
-            // ── Legacy TextMesh ──
             TextMesh tm = obj.GetComponentInChildren<TextMesh>(true);
-            if (tm != null)
-            {
-                tm.text = (zeroIndex + 1).ToString();
-                return obj;
-            }
+            if (tm != null) tm.text = (zeroIndex + 1).ToString();
 
-            Debug.LogWarning($"[HintNumberSpawner] Prefab '{numberTextPrefab.name}' has no " +
-                             "TextMesh or TextMeshPro component.", this);
-            return obj; // still return; at least the mesh is visible
+            return obj;
         }
         else
         {
-            // ── Option A ─────────────────────────────────────────────────────
             if (numberPrefabs == null || numberPrefabs.Length == 0)
             {
-                Debug.LogError("[HintNumberSpawner] 'numberPrefabs' array is empty! " +
-                               "Add one prefab per word slot (index 0 = number 1, etc.).", this);
+                Debug.LogError("[HintNumberSpawner] 'numberPrefabs' array is empty!", this);
                 return null;
             }
 
             if (zeroIndex < 0 || zeroIndex >= numberPrefabs.Length)
             {
-                Debug.LogError($"[HintNumberSpawner] No prefab at index {zeroIndex}. " +
-                               $"Array has {numberPrefabs.Length} element(s). " +
-                               "Make sure numberPrefabs.Length >= totalSlots.", this);
+                Debug.LogError($"[HintNumberSpawner] No prefab at index {zeroIndex}.", this);
                 return null;
             }
 
             if (numberPrefabs[zeroIndex] == null)
             {
-                Debug.LogError($"[HintNumberSpawner] numberPrefabs[{zeroIndex}] is null. " +
-                               "Drag the prefab into that array slot.", this);
+                Debug.LogError($"[HintNumberSpawner] numberPrefabs[{zeroIndex}] is null.", this);
                 return null;
             }
 
-            GameObject obj = Instantiate(numberPrefabs[zeroIndex], worldPos, Quaternion.identity);
+            GameObject obj = Instantiate(numberPrefabs[zeroIndex], worldPos, rotation);
             obj.name = $"HintNum_{zeroIndex + 1}";
             return obj;
         }
