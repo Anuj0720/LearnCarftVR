@@ -10107,7 +10107,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e33a5e0d30ed040c58ed7b4e163d432f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  vfxPrefab: {fileID: 2400466318854986903, guid: bad5794a53f5c3645bb444b3a040ba01,
+  vfxPrefab: {fileID: 6469354921825657977, guid: 4d9a3b35b3bc07649b697df7fb497b6d,
     type: 3}
   effectScale: 0.1
 --- !u!1001 &839440348
@@ -17021,7 +17021,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e33a5e0d30ed040c58ed7b4e163d432f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  vfxPrefab: {fileID: 2400466318854986903, guid: bad5794a53f5c3645bb444b3a040ba01,
+  vfxPrefab: {fileID: 6469354921825657977, guid: 4d9a3b35b3bc07649b697df7fb497b6d,
     type: 3}
   effectScale: 0.1
 --- !u!1 &1403605177
