@@ -1,4 +1,3 @@
-```markdown
 # LearnCraft VR
 
 An immersive **Virtual Reality educational game** that teaches **Mathematics** and **English** through interactive lessons, AI-guided instruction, and gamified learning experiences.
@@ -131,4 +130,4 @@ The English module consists of four interactive learning rooms.
 <p align="center">
   <img src="output/eng_quiz.jpg" width="850">
 </p>
-```
+
