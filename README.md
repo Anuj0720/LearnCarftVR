@@ -131,3 +131,31 @@ The English module consists of four interactive learning rooms.
   <img src="output/eng_quiz.jpg" width="850">
 </p>
 
+---
+
+# Copyright
+
+© 2026 Anuj Jadhav. All Rights Reserved.
+
+This repository and its contents, including but not limited to the source code,
+Unity project files, C# scripts, 3D models, textures, animations, audio,
+documentation, and other assets, are the intellectual property of Anuj Jadhav.
+
+This project is publicly available for viewing and educational purposes only.
+No part of this repository may be copied, reproduced, modified, redistributed,
+or used in personal, academic, or commercial projects without prior written
+permission from the copyright holder.
+
+Unauthorized use, distribution, or reproduction of this project or its assets
+may result in legal action.
+
+For licensing or permission requests, please contact:
+- GitHub: https://github.com/Anuj0720
+- LinkedIn: https://www.linkedin.com/in/anuj-jadhav-8814b5302/
+
+---
+
+## License
+
+This project is licensed under a custom **All Rights Reserved** license.
+See the [LICENSE](LICENSE) file for complete terms.
